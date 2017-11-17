@@ -1,0 +1,13 @@
+<%= content_tag(:div, **props_for(:alert)) do %>
+  <% if value_for(:dismissable) %>
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+  <% end %>
+
+  <% if value_for(:title) %>
+    <%= content_tag(:h4, value_for(:title), **props_for(:title)) %>
+  <% end %>
+
+  <% if value_for(:body) %>
+    <%= content_tag(:div, value_for(:body), **props_for(:body)) %>
+  <% end %>
+<% end %>

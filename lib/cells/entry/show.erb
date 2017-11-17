@@ -1,0 +1,9 @@
+<%= content_tag(:dl, **props_for(:entry)) do %>
+  <%= content_tag(:dt, **props_for(:key)) do %>
+    <%= value_for(:key) %>
+  <% end %>
+
+  <%= content_tag(:dd, **props_for(:value)) do %>
+    <%= value_for(:value) %>
+  <% end %>
+<% end %>

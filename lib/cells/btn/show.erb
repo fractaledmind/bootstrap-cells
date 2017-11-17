@@ -1,0 +1,9 @@
+<%= content_tag(value_for(:tag), **props_for(:btn)) do %>
+  <% if value_for(:text) %>
+    <%= content_tag(:span, value_for(:text), **props_for(:text)) %>
+  <% end %>
+
+  <% if value_for(:icon) %>
+    <%= content_tag(:i, nil, **props_for(:icon)) %>
+  <% end %>
+<% end %>
