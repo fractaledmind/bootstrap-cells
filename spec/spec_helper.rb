@@ -1,5 +1,8 @@
+require 'simplecov_helper'
+
 require 'bundler/setup'
-require 'bootstrap_cells'
+require 'bootstrap-cells'
+require 'capybara'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
