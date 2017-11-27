@@ -4,13 +4,13 @@ class AlertCell < BootstrapCells::Cell
   def self.structure
     {
       title: {
-        type: [:Stringable, :Callable],
+        type: %i[Stringable Callable],
         default: nil,
         required: false
       },
       body: {
-        type: [:Stringable, :Callable],
-        default: '—',
+        type: %i[Stringable Callable],
+        default: nil,
         required: false
       }
     }
@@ -21,6 +21,21 @@ class AlertCell < BootstrapCells::Cell
       alert: {
         class: 'alert',
         role: 'alert'
+      },
+      title: {
+        class: 'alert-title'
+      },
+      body: {
+        class: 'alert-body'
+      }
+    }
+  end
+
+  def self.meta
+    {
+      alert: {
+        dismissable: false,
+        type: nil
       }
     }
   end
@@ -28,13 +43,11 @@ class AlertCell < BootstrapCells::Cell
   def props
     instance_props = {
       alert: {
-        class: ''
-      },
-      text: {
-        class: value_for(:icon, :position) == 'left' ? 'order-2' : nil
-      },
-      icon: {
-        class: "fa-#{value_for(:icon)} m#{value_for(:icon, :position) == 'left' ? 'r' : 'l'}-1 #{value_for(:icon, :position) == 'left' ? 'order-1' : ''}"
+        class: meld(
+          ('alert-dismissable' if meta_for(:alert, :dismissable)),
+          ("alert-#{meta_for(:alert, :type)}" if meta_for(:alert, :type)),
+          ('border-silver' unless meta_for(:alert, :type))
+        )
       }
     }
     merge_props(defaults: self.class.props,
