@@ -22,25 +22,24 @@ module BootstrapCells
     include ActionView::Helpers::TagHelper
     include ::Cell::Erb
 
-    def props_for(k)
+    def props_for(key)
       defaults = try(:props) || self.class.props
-      merge_props(defaults: defaults.dig(k),
-                  overrides: instructions.dig(:props, k))
+      merge_props(defaults: defaults.dig(key),
+                  overrides: instructions.dig(:props, key))
     end
 
-    def value_for(*keypath)
-      # return unless self.class.structure.keys.include?(k)
-      value = keypath.reduce(instructions) { |m, k| m.try(:dig, k) }
+    def value_for(key)
+      return unless self.class.structure.keys.include?(key)
+
+      value = access(instructions, key)
       return value.call                   if value.respond_to?(:call) &&
-                                             structure_key_can_be?(keypath, :Callable)
-      return value_for(*keypath, :value)  if value.is_a?(Hash) &&
-                                             structure_key_can_be?(keypath, Hash)
-      return value                        if structure_key_can_be?(keypath, value.class)
+                                             structure_key_can_be?(key, :Callable)
+      return value                        if structure_key_can_be?(key, value.class)
       return value.to_s                   if value.respond_to?(:to_s) &&
-                                             structure_key_can_be?(keypath, :Stringable) &&
+                                             structure_key_can_be?(key, :Stringable) &&
                                              !value.nil?
 
-      access_structure_value(*keypath, :default)
+      access_structure_value(key, :default)
     end
 
     def meta_for(*keypath)
@@ -66,11 +65,7 @@ module BootstrapCells
     end
 
     def access_structure_value(*keypath, value)
-      access(self.class.structure, *structure_keypath(*keypath), value)
-    end
-
-    def structure_keypath(*keypath)
-      Array.wrap(keypath).flat_map { |i| [i, :structure] }[0..-2]
+      access(self.class.structure, *keypath, value)
     end
 
     def access(hash, *keypath)
