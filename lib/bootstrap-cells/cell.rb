@@ -43,6 +43,12 @@ module BootstrapCells
       access_structure_value(*keypath, :default)
     end
 
+    def meta_for(*keypath)
+      defaults = try(:meta) || self.class.meta
+
+      access(instructions, :meta, *keypath) || access(defaults, *keypath)
+    end
+
     def instructions
       model.merge(options).with_indifferent_access
     end
