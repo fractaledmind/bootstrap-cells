@@ -4,12 +4,12 @@ class EntryCell < BootstrapCells::Cell
   def self.structure
     {
       key: {
-        type: [:Stringable, :Callable],
+        type: %i[Stringable Callable],
         default: nil,
         required: false
       },
       value: {
-        type: [:Stringable, :Callable],
+        type: %i[Stringable Callable],
         default: '—',
         required: false
       }
