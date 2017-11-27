@@ -14,8 +14,8 @@ RSpec.describe BtnCell do
       let(:instructions) { {} }
 
       it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-      it { should_not have_selector('a > span') }
-      it { should_not have_selector('a > i') }
+      it { should_not have_selector('.btn > span') }
+      it { should_not have_selector('.btn > i') }
 
       context 'and props are passed' do
         let(:instructions) do
@@ -29,8 +29,73 @@ RSpec.describe BtnCell do
         end
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center.test#btn[role="button"]') }
-        it { should_not have_selector('a > span') }
-        it { should_not have_selector('a > i') }
+        it { should_not have_selector('.btn > span') }
+        it { should_not have_selector('.btn > i') }
+      end
+
+      context 'and meta are passed' do
+        context 'where btn tag is button' do
+          let(:instructions) do
+            {
+              meta: {
+                btn: { tag: 'button' }
+              }
+            }
+          end
+
+          it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+          it { should_not have_selector('.btn > span') }
+          it { should_not have_selector('.btn > i') }
+        end
+
+        context 'where icon position is specified' do
+          context 'as left' do
+            let(:instructions) do
+              {
+                meta: {
+                  icon: { position: 'left' }
+                }
+              }
+            end
+
+            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+            it { should_not have_selector('.btn > span') }
+            it { should_not have_selector('.btn > i') }
+          end
+
+          context 'as right' do
+            let(:instructions) do
+              {
+                meta: {
+                  icon: { position: 'right' }
+                }
+              }
+            end
+
+            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+            it { should_not have_selector('.btn > span') }
+            it { should_not have_selector('.btn > i') }
+          end
+        end
+
+        context 'where btn tag is button and icon position is specified' do
+          let(:instructions) do
+            {
+              meta: {
+                btn: {
+                  tag: 'button'
+                },
+                icon: {
+                  position: 'left'
+                }
+              }
+            }
+          end
+
+          it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+          it { should_not have_selector('.btn > span') }
+          it { should_not have_selector('.btn > i') }
+        end
       end
     end
 
@@ -40,15 +105,84 @@ RSpec.describe BtnCell do
         let(:instructions) { { text: text } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should have_selector('a > span', text: text) }
-        it { should_not have_selector('a > i') }
+        it { should have_selector('.btn > span', text: text) }
+        it { should_not have_selector('.btn > i') }
 
         context 'and props are passed' do
           let(:instructions) { { text: text, props: { text: { class: 'test', id: 'text' } } } }
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.test#text', text: text) }
-          it { should_not have_selector('a > i') }
+          it { should have_selector('.btn > span.test#text', text: text) }
+          it { should_not have_selector('.btn > i') }
+        end
+
+        context 'and meta are passed' do
+          context 'where btn tag is button' do
+            let(:instructions) do
+              {
+                text: text,
+                meta: {
+                  btn: { tag: 'button' }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should_not have_selector('.btn > i') }
+          end
+
+          context 'where icon position is specified' do
+            context 'as left' do
+              let(:instructions) do
+                {
+                  text: text,
+                  meta: {
+                    icon: { position: 'left' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should_not have_selector('.btn > i') }
+            end
+
+            context 'as right' do
+              let(:instructions) do
+                {
+                  text: text,
+                  meta: {
+                    icon: { position: 'right' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should_not have_selector('.btn > i') }
+            end
+          end
+
+          context 'where btn tag is button and icon position is specified' do
+            let(:instructions) do
+              {
+                text: text,
+                meta: {
+                  btn: {
+                    tag: 'button'
+                  },
+                  icon: {
+                    position: 'left'
+                  }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should_not have_selector('.btn > i') }
+          end
         end
       end
 
@@ -57,15 +191,84 @@ RSpec.describe BtnCell do
         let(:instructions) { { text: text } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should have_selector('a > span', text: text) }
-        it { should_not have_selector('a > i') }
+        it { should have_selector('.btn > span', text: text) }
+        it { should_not have_selector('.btn > i') }
 
         context 'and props are passed' do
           let(:instructions) { { text: text, props: { text: { class: 'test', id: 'text' } } } }
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.test#text', text: text) }
-          it { should_not have_selector('a > i') }
+          it { should have_selector('.btn > span.test#text', text: text) }
+          it { should_not have_selector('.btn > i') }
+        end
+
+        context 'and meta are passed' do
+          context 'where btn tag is button' do
+            let(:instructions) do
+              {
+                text: text,
+                meta: {
+                  btn: { tag: 'button' }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should_not have_selector('.btn > i') }
+          end
+
+          context 'where icon position is specified' do
+            context 'as left' do
+              let(:instructions) do
+                {
+                  text: text,
+                  meta: {
+                    icon: { position: 'left' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should_not have_selector('.btn > i') }
+            end
+
+            context 'as right' do
+              let(:instructions) do
+                {
+                  text: text,
+                  meta: {
+                    icon: { position: 'right' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should_not have_selector('.btn > i') }
+            end
+          end
+
+          context 'where btn tag is button and icon position is specified' do
+            let(:instructions) do
+              {
+                text: text,
+                meta: {
+                  btn: {
+                    tag: 'button'
+                  },
+                  icon: {
+                    position: 'left'
+                  }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should_not have_selector('.btn > i') }
+          end
         end
       end
 
@@ -74,15 +277,15 @@ RSpec.describe BtnCell do
         let(:instructions) { { text: text } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should have_selector('a > span', text: text.call) }
-        it { should_not have_selector('a > i') }
+        it { should have_selector('.btn > span', text: text.call) }
+        it { should_not have_selector('.btn > i') }
 
         context 'and props are passed' do
           let(:instructions) { { text: text, props: { text: { class: 'test', id: 'text' } } } }
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.test#text', text: text.call) }
-          it { should_not have_selector('a > i') }
+          it { should have_selector('.btn > span.test#text', text: text.call) }
+          it { should_not have_selector('.btn > i') }
         end
       end
     end
@@ -93,15 +296,84 @@ RSpec.describe BtnCell do
         let(:instructions) { { icon: icon } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should_not have_selector('a > span') }
-        it { should have_selector("a > i.fa.fa-#{icon}.ml-1") }
+        it { should_not have_selector('.btn > span') }
+        it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
 
         context 'and props are passed' do
           let(:instructions) { { icon: icon, props: { icon: { class: 'test', id: 'icon' } } } }
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should_not have_selector('a > span') }
-          it { should have_selector("a > i.fa.fa-#{icon}.ml-1.test#icon") }
+          it { should_not have_selector('.btn > span') }
+          it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1.test#icon") }
+        end
+
+        context 'and meta are passed' do
+          context 'where btn tag is button' do
+            let(:instructions) do
+              {
+                icon: icon,
+                meta: {
+                  btn: { tag: 'button' }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should_not have_selector('.btn > span') }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+          end
+
+          context 'where icon position is specified' do
+            context 'as left' do
+              let(:instructions) do
+                {
+                  icon: icon,
+                  meta: {
+                    icon: { position: 'left' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should_not have_selector('.btn > span') }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+            end
+
+            context 'as right' do
+              let(:instructions) do
+                {
+                  icon: icon,
+                  meta: {
+                    icon: { position: 'right' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should_not have_selector('.btn > span') }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+            end
+          end
+
+          context 'where btn tag is button and icon position is left' do
+            let(:instructions) do
+              {
+                icon: icon,
+                meta: {
+                  btn: {
+                    tag: 'button'
+                  },
+                  icon: {
+                    position: 'left'
+                  }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should_not have_selector('.btn > span') }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+          end
         end
       end
 
@@ -110,15 +382,84 @@ RSpec.describe BtnCell do
         let(:instructions) { { icon: icon } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should_not have_selector('a > span') }
-        it { should have_selector("a > i.fa.fa-#{icon}.ml-1") }
+        it { should_not have_selector('.btn > span') }
+        it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
 
         context 'and props are passed' do
           let(:instructions) { { icon: icon, props: { icon: { class: 'test', id: 'icon' } } } }
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should_not have_selector('a > span') }
-          it { should have_selector("a > i.fa.fa-#{icon}.ml-1.test#icon") }
+          it { should_not have_selector('.btn > span') }
+          it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1.test#icon") }
+        end
+
+        context 'and meta are passed' do
+          context 'where btn tag is button' do
+            let(:instructions) do
+              {
+                icon: icon,
+                meta: {
+                  btn: { tag: 'button' }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should_not have_selector('.btn > span') }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+          end
+
+          context 'where icon position is specified' do
+            context 'as left' do
+              let(:instructions) do
+                {
+                  icon: icon,
+                  meta: {
+                    icon: { position: 'left' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should_not have_selector('.btn > span') }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+            end
+
+            context 'as right' do
+              let(:instructions) do
+                {
+                  icon: icon,
+                  meta: {
+                    icon: { position: 'right' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should_not have_selector('.btn > span') }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+            end
+          end
+
+          context 'where btn tag is button and icon position is left' do
+            let(:instructions) do
+              {
+                icon: icon,
+                meta: {
+                  btn: {
+                    tag: 'button'
+                  },
+                  icon: {
+                    position: 'left'
+                  }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should_not have_selector('.btn > span') }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+          end
         end
       end
 
@@ -127,67 +468,15 @@ RSpec.describe BtnCell do
         let(:instructions) { { icon: icon } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should_not have_selector('a > span') }
-        it { should have_selector("a > i.fa.fa-#{icon.call}.ml-1") }
+        it { should_not have_selector('.btn > span') }
+        it { should have_selector(".btn > i.fa.fa-#{icon.call}.ml-1") }
 
         context 'and props are passed' do
           let(:instructions) { { icon: icon, props: { icon: { class: 'test', id: 'icon' } } } }
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should_not have_selector('a > span') }
-          it { should have_selector("a > i.fa.fa-#{icon.call}.ml-1.test#icon") }
-        end
-      end
-
-      context 'as Hash' do
-        let(:instructions) { { icon: icon } }
-
-        context 'with position empty' do
-          let(:icon) { { value: 'icon' } }
-
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should_not have_selector('a > span') }
-          it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1") }
-
-          context 'and props are passed' do
-            let(:instructions) { { icon: icon, props: { icon: { class: 'test', id: 'icon' } } } }
-
-            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-            it { should_not have_selector('a > span') }
-            it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1.test#icon") }
-          end
-        end
-
-        context 'with position as right' do
-          let(:icon) { { position: 'right', value: 'icon' } }
-
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should_not have_selector('a > span') }
-          it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1") }
-
-          context 'and props are passed' do
-            let(:instructions) { { icon: icon, props: { icon: { class: 'test', id: 'icon' } } } }
-
-            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-            it { should_not have_selector('a > span') }
-            it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1.test#icon") }
-          end
-        end
-
-        context 'with position as left' do
-          let(:icon) { { position: 'left', value: 'icon' } }
-
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should_not have_selector('a > span') }
-          it { should have_selector("a > i.fa.fa-#{icon[:value]}.mr-1.order-1") }
-
-          context 'and props are passed' do
-            let(:instructions) { { icon: icon, props: { icon: { class: 'test', id: 'icon' } } } }
-
-            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-            it { should_not have_selector('a > span') }
-            it { should have_selector("a > i.fa.fa-#{icon[:value]}.mr-1.order-1.test#icon") }
-          end
+          it { should_not have_selector('.btn > span') }
+          it { should have_selector(".btn > i.fa.fa-#{icon.call}.ml-1.test#icon") }
         end
       end
     end
@@ -199,8 +488,8 @@ RSpec.describe BtnCell do
         let(:instructions) { { text: text, icon: icon } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should have_selector('a > span', text: text) }
-        it { should have_selector("a > i.fa.fa-#{icon}.ml-1") }
+        it { should have_selector('.btn > span', text: text) }
+        it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
 
         context 'and props are passed' do
           let(:instructions) do
@@ -214,8 +503,77 @@ RSpec.describe BtnCell do
           end
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.test#text', text: text) }
-          it { should have_selector("a > i.fa.fa-#{icon}.ml-1.test#icon") }
+          it { should have_selector('.btn > span.test#text', text: text) }
+          it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1.test#icon") }
+        end
+
+        context 'and meta are passed' do
+          context 'where btn tag is button' do
+            let(:instructions) do
+              {
+                text: text, icon: icon,
+                meta: {
+                  btn: { tag: 'button' }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+          end
+
+          context 'where icon position is specified' do
+            context 'as left' do
+              let(:instructions) do
+                {
+                  text: text, icon: icon,
+                  meta: {
+                    icon: { position: 'left' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+            end
+
+            context 'as right' do
+              let(:instructions) do
+                {
+                  text: text, icon: icon,
+                  meta: {
+                    icon: { position: 'right' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+            end
+          end
+
+          context 'where btn tag is button and icon position is left' do
+            let(:instructions) do
+              {
+                text: text, icon: icon,
+                meta: {
+                  btn: {
+                    tag: 'button'
+                  },
+                  icon: {
+                    position: 'left'
+                  }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+          end
         end
       end
 
@@ -225,8 +583,8 @@ RSpec.describe BtnCell do
         let(:instructions) { { text: text, icon: icon } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should have_selector('a > span', text: text) }
-        it { should have_selector("a > i.fa.fa-#{icon}.ml-1") }
+        it { should have_selector('.btn > span', text: text) }
+        it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
 
         context 'and props are passed' do
           let(:instructions) do
@@ -240,8 +598,77 @@ RSpec.describe BtnCell do
           end
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.test#text', text: text) }
-          it { should have_selector("a > i.fa.fa-#{icon}.ml-1.test#icon") }
+          it { should have_selector('.btn > span.test#text', text: text) }
+          it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1.test#icon") }
+        end
+
+        context 'and meta are passed' do
+          context 'where btn tag is button' do
+            let(:instructions) do
+              {
+                text: text, icon: icon,
+                meta: {
+                  btn: { tag: 'button' }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+          end
+
+          context 'where icon position is specified' do
+            context 'as left' do
+              let(:instructions) do
+                {
+                  text: text, icon: icon,
+                  meta: {
+                    icon: { position: 'left' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+            end
+
+            context 'as right' do
+              let(:instructions) do
+                {
+                  text: text, icon: icon,
+                  meta: {
+                    icon: { position: 'right' }
+                  }
+                }
+              end
+
+              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('.btn > span', text: text) }
+              it { should have_selector(".btn > i.fa.fa-#{icon}.ml-1") }
+            end
+          end
+
+          context 'where btn tag is button and icon position is left' do
+            let(:instructions) do
+              {
+                text: text, icon: icon,
+                meta: {
+                  btn: {
+                    tag: 'button'
+                  },
+                  icon: {
+                    position: 'left'
+                  }
+                }
+              }
+            end
+
+            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('.btn > span', text: text) }
+            it { should have_selector(".btn > i.fa.fa-#{icon}.mr-1.order-1") }
+          end
         end
       end
 
@@ -251,8 +678,8 @@ RSpec.describe BtnCell do
         let(:instructions) { { text: text, icon: icon } }
 
         it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-        it { should have_selector('a > span', text: text.call) }
-        it { should have_selector("a > i.fa.fa-#{icon.call}.ml-1") }
+        it { should have_selector('.btn > span', text: text.call) }
+        it { should have_selector(".btn > i.fa.fa-#{icon.call}.ml-1") }
 
         context 'and props are passed' do
           let(:instructions) do
@@ -266,85 +693,8 @@ RSpec.describe BtnCell do
           end
 
           it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.test#text', text: text.call) }
-          it { should have_selector("a > i.fa.fa-#{icon.call}.ml-1.test#icon") }
-        end
-      end
-
-      context 'with `icon` as Hash' do
-        let(:text) { 'TEXT' }
-        let(:instructions) { { text: text, icon: icon } }
-
-        context 'with position empty' do
-          let(:icon) { { value: 'icon' } }
-
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span', text: text) }
-          it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1") }
-
-          context 'and props are passed' do
-            let(:instructions) do
-              {
-                text: text, icon: icon,
-                props: {
-                  text: { class: 'test', id: 'text' },
-                  icon: { class: 'test', id: 'icon' }
-                }
-              }
-            end
-
-            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-            it { should have_selector('a > span.test#text', text: text) }
-            it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1.test#icon") }
-          end
-        end
-
-        context 'with position as right' do
-          let(:icon) { { position: 'right', value: 'icon' } }
-
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span', text: text) }
-          it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1") }
-
-          context 'and props are passed' do
-            let(:instructions) do
-              {
-                text: text, icon: icon,
-                props: {
-                  text: { class: 'test', id: 'text' },
-                  icon: { class: 'test', id: 'icon' }
-                }
-              }
-            end
-
-            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-            it { should have_selector('a > span.test#text', text: text) }
-            it { should have_selector("a > i.fa.fa-#{icon[:value]}.ml-1.test#icon") }
-          end
-        end
-
-        context 'with position as left' do
-          let(:icon) { { position: 'left', value: 'icon' } }
-
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-          it { should have_selector('a > span.order-2', text: text) }
-          it { should have_selector("a > i.fa.fa-#{icon[:value]}.mr-1.order-1") }
-
-          context 'and props are passed' do
-            let(:instructions) do
-              {
-                text: text, icon: icon,
-                props: {
-                  text: { class: 'test', id: 'text' },
-                  icon: { class: 'test', id: 'icon' }
-                }
-              }
-            end
-
-            it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
-            it { should have_selector('a > span.test#text', text: text) }
-            it { should have_selector("a > i.fa.fa-#{icon[:value]}.mr-1.order-1.test#icon") }
-          end
+          it { should have_selector('.btn > span.test#text', text: text.call) }
+          it { should have_selector(".btn > i.fa.fa-#{icon.call}.ml-1.test#icon") }
         end
       end
     end

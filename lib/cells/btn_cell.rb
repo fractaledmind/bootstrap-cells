@@ -3,32 +3,15 @@
 class BtnCell < BootstrapCells::Cell
   def self.structure
     {
-      tag: {
-        type: [:Stringable, :Callable],
-        default: :a,
-        required: false
-      },
       text: {
-        type: [:Stringable, :Callable],
+        type: %i[Stringable Callable],
         default: nil,
         required: false
       },
       icon: {
-        type: [Hash, :Stringable, :Callable],
+        type: %i[Stringable Callable],
         default: nil,
-        required: false,
-        structure: {
-          position: {
-            type: [:Stringable, :Callable],
-            default: 'right',
-            required: false
-          },
-          value: {
-            type: [:Stringable, :Callable],
-            default: nil,
-            required: false
-          }
-        }
+        required: false
       }
     }
   end
@@ -45,16 +28,31 @@ class BtnCell < BootstrapCells::Cell
     }
   end
 
+  def self.meta
+    {
+      btn: {
+        tag: 'a'
+      },
+      icon: {
+        position: 'right'
+      }
+    }
+  end
+
   def props
     instance_props = {
       btn: {
-        (value_for(:tag) == :a ? :role : :type) => 'button'
+        (meta_for(:btn, :tag) == 'a' ? :role : :type) => 'button'
       },
       text: {
-        class: value_for(:icon, :position) == 'left' ? 'order-2' : nil
+        class: meta_for(:icon, :position) == 'left' ? 'order-2' : nil
       },
       icon: {
-        class: "fa-#{value_for(:icon)} m#{value_for(:icon, :position) == 'left' ? 'r' : 'l'}-1 #{value_for(:icon, :position) == 'left' ? 'order-1' : ''}"
+        class: meld(
+          "fa-#{value_for(:icon)}",
+          "m#{meta_for(:icon, :position) == 'left' ? 'r' : 'l'}-1",
+          meta_for(:icon, :position) == 'left' ? 'order-1' : ''
+        )
       }
     }
     merge_props(defaults: self.class.props,
