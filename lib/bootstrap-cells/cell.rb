@@ -46,7 +46,8 @@ module BootstrapCells
     def meta_for(*keypath)
       defaults = try(:meta) || self.class.meta
 
-      access(instructions, :meta, *keypath) || access(defaults, *keypath)
+      metadata = access(instructions, :meta, *keypath) || access(defaults, *keypath)
+      return metadata.to_s if metadata
     end
 
     def instructions
