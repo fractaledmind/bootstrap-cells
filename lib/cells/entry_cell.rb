@@ -35,7 +35,16 @@ class EntryCell < BootstrapCells::Cell
   end
 
   def props
-    instance_props = Hash.new { |hash, key| hash[key] = {} }.tap do |h|
+    instance_props = entry_type_props
+
+    merge_props(self.class.props,
+                instance_props)
+  end
+
+  private
+
+  def entry_type_props
+    Hash.new { |hash, key| hash[key] = {} }.tap do |h|
       if meta_for(:entry, :type) == 'row'
         h[:entry][:class] = 'd-flex'
         h[:key][:class] = 'col-4 text-center mb-0'
@@ -44,8 +53,5 @@ class EntryCell < BootstrapCells::Cell
         h[:entry][:class] = 'text-center'
       end
     end
-
-    merge_props(defaults: self.class.props,
-                overrides: instance_props)
   end
 end

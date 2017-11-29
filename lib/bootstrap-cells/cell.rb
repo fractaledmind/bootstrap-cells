@@ -24,8 +24,8 @@ module BootstrapCells
 
     def props_for(key)
       defaults = try(:props) || self.class.props
-      merge_props(defaults: defaults.dig(key),
-                  overrides: instructions.dig(:props, key))
+      merge_props(defaults.dig(key),
+                  instructions.dig(:props, key))
     end
 
     def value_for(key)
@@ -54,10 +54,15 @@ module BootstrapCells
       model.merge(options).with_indifferent_access
     end
 
-    def merge_props(defaults:, overrides:)
-      defaults = (defaults || {}).deep_symbolize_keys
-      overrides = (overrides || {}).deep_symbolize_keys
-      defaults.deep_merge(overrides) { |k, o, n| k == :class ? meld(n, o) : n }
+    def merge_props(*prop_hashes)
+      prop_hashes.compact
+                 .map(&:deep_symbolize_keys)
+                 .reduce do |memo_hash, current_hash|
+                   memo_hash.deep_merge(current_hash) do |key, old_val, new_val|
+                     next meld(new_val, old_val) if key == :class
+                     new_val
+                   end
+                 end
     end
 
     private
