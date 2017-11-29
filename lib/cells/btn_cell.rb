@@ -6,7 +6,7 @@ class BtnCell < BootstrapCells::Cell
       text: {
         type: %i[Stringable Callable],
         default: nil,
-        required: false
+        required: true
       },
       icon: {
         type: %i[Stringable Callable],
