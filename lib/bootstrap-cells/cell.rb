@@ -32,6 +32,7 @@ module BootstrapCells
       return unless self.class.structure.keys.include?(key)
 
       value = access(instructions, key)
+      fail("`#{key}` is a required field") if access_structure_value(key, :required) && !value
       return value.call                   if value.respond_to?(:call) &&
                                              structure_key_can_be?(key, :Callable)
       return value                        if structure_key_can_be?(key, value.class)
