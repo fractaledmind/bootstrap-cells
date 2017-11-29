@@ -16,22 +16,38 @@ RSpec.describe EntryCell do
       it { should have_selector('dl.text-center.my-0') }
       it { should have_selector('dl > dt', text: nil) }
       it { should have_selector('dl > dd', text: '—') }
-    end
 
-    context 'when only props' do
-      let(:instructions) do
-        {
-          props: {
-            entry: { class: 'test', id: 'entry', data: { attribute: 'foo' } },
-            key: { class: 'test', id: 'key', data: { attribute: 'foo' } },
-            value: { class: 'test', id: 'value', data: { attribute: 'foo' } }
+      context 'and props are passed' do
+        let(:instructions) do
+          {
+            props: {
+              entry: { class: 'test', id: 'entry', data: { attribute: 'foo' } },
+              key: { class: 'test', id: 'key', data: { attribute: 'foo' } },
+              value: { class: 'test', id: 'value', data: { attribute: 'foo' } }
+            }
           }
-        }
+        end
+
+        it { should have_selector('dl.text-center.my-0.test#entry') }
+        it { should have_selector('dl > dt.test#key', text: nil) }
+        it { should have_selector('dl > dd.test#value', text: '—') }
       end
 
-      it { should have_selector('dl.text-center.my-0.test#entry') }
-      it { should have_selector('dl > dt.test#key', text: nil) }
-      it { should have_selector('dl > dd.test#value', text: '—') }
+      context 'and meta are passed' do
+        context 'where type is row' do
+          let(:instructions) do
+            {
+              meta: {
+                entry: { type: 'row' }
+              }
+            }
+          end
+
+          it { should have_selector('dl.d-flex.my-0') }
+          it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
+          it { should have_selector('dl > dd.col.mb-0', text: '—') }
+        end
+      end
     end
 
     context 'when `key` only is defined' do
@@ -50,6 +66,23 @@ RSpec.describe EntryCell do
           it { should have_selector('dl > dt.test#key', text: key) }
           it { should have_selector('dl > dd', text: '—') }
         end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key) }
+            it { should have_selector('dl > dd.col.mb-0', text: '—') }
+          end
+        end
       end
 
       context 'as Stringable' do
@@ -67,6 +100,23 @@ RSpec.describe EntryCell do
           it { should have_selector('dl > dt.test#key', text: key) }
           it { should have_selector('dl > dd', text: '—') }
         end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key) }
+            it { should have_selector('dl > dd.col.mb-0', text: '—') }
+          end
+        end
       end
 
       context 'as Callable' do
@@ -83,6 +133,23 @@ RSpec.describe EntryCell do
           it { should have_selector('dl.text-center.my-0') }
           it { should have_selector('dl > dt.test#key', text: key.call) }
           it { should have_selector('dl > dd', text: '—') }
+        end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key.call) }
+            it { should have_selector('dl > dd.col.mb-0', text: '—') }
+          end
         end
       end
     end
@@ -103,6 +170,23 @@ RSpec.describe EntryCell do
           it { should have_selector('dl > dt', text: nil) }
           it { should have_selector('dl > dd.test#value', text: value) }
         end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
+            it { should have_selector('dl > dd.col.mb-0', text: value) }
+          end
+        end
       end
 
       context 'as Stringable' do
@@ -120,6 +204,23 @@ RSpec.describe EntryCell do
           it { should have_selector('dl > dt', text: nil) }
           it { should have_selector('dl > dd.test#value', text: value) }
         end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
+            it { should have_selector('dl > dd.col.mb-0', text: value) }
+          end
+        end
       end
 
       context 'as Callable' do
@@ -136,6 +237,23 @@ RSpec.describe EntryCell do
           it { should have_selector('dl.text-center.my-0') }
           it { should have_selector('dl > dt', text: nil) }
           it { should have_selector('dl > dd.test#value', text: value.call) }
+        end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
+            it { should have_selector('dl > dd.col.mb-0', text: value.call) }
+          end
         end
       end
     end
@@ -163,6 +281,24 @@ RSpec.describe EntryCell do
           it { should have_selector('dl > dt.test#key', text: key) }
           it { should have_selector('dl > dd.test#value', text: value) }
         end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key) }
+            it { should have_selector('dl > dd.col.mb-0', text: value) }
+          end
+        end
       end
 
       context 'as Stringables' do
@@ -186,6 +322,24 @@ RSpec.describe EntryCell do
           it { should have_selector('dl.text-center.my-0') }
           it { should have_selector('dl > dt.test#key', text: key) }
           it { should have_selector('dl > dd.test#value', text: value) }
+        end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key) }
+            it { should have_selector('dl > dd.col.mb-0', text: value) }
+          end
         end
       end
 
@@ -211,6 +365,24 @@ RSpec.describe EntryCell do
           it { should have_selector('dl > dt.test#key', text: key.call) }
           it { should have_selector('dl > dd.test#value', text: value.call) }
         end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key.call) }
+            it { should have_selector('dl > dd.col.mb-0', text: value.call) }
+          end
+        end
       end
 
       context 'but are different kinds of values' do
@@ -234,6 +406,24 @@ RSpec.describe EntryCell do
           it { should have_selector('dl.text-center.my-0') }
           it { should have_selector('dl > dt.test#key', text: key.call) }
           it { should have_selector('dl > dd.test#value', text: value) }
+        end
+
+        context 'and meta are passed' do
+          context 'where type is row' do
+            let(:instructions) do
+              {
+                key: key,
+                value: value,
+                meta: {
+                  entry: { type: 'row' }
+                }
+              }
+            end
+
+            it { should have_selector('dl.d-flex.my-0') }
+            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: key.call) }
+            it { should have_selector('dl > dd.col.mb-0', text: value) }
+          end
         end
       end
     end
