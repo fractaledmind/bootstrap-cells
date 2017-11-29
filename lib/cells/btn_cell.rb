@@ -19,7 +19,7 @@ class BtnCell < BootstrapCells::Cell
   def self.props
     {
       btn: {
-        class: 'btn d-flex justify-content-between align-items-center'
+        class: 'btn'
       },
       text: {},
       icon: {
@@ -31,7 +31,8 @@ class BtnCell < BootstrapCells::Cell
   def self.meta
     {
       btn: {
-        tag: 'a'
+        tag: 'a',
+        type: 'secondary'
       },
       icon: {
         position: 'right'
@@ -42,7 +43,8 @@ class BtnCell < BootstrapCells::Cell
   def props
     instance_props = {
       btn: {
-        (meta_for(:btn, :tag) == 'a' ? :role : :type) => 'button'
+        (meta_for(:btn, :tag) == 'a' ? :role : :type) => 'button',
+        class: "btn-#{meta_for(:btn, :type)}"
       },
       text: {
         class: meta_for(:icon, :position) == 'left' ? 'order-2' : nil
@@ -55,6 +57,8 @@ class BtnCell < BootstrapCells::Cell
         )
       }
     }
+    instance_props[:btn][:href] = '' if meta_for(:btn, :tag) == 'a'
+    instance_props[:btn][:class] = 'd-flex justify-content-between align-items-center' if value_for(:text) && value_for(:icon)
     merge_props(defaults: self.class.props,
                 overrides: instance_props)
   end

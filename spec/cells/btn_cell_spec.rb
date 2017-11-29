@@ -7,8 +7,6 @@ RSpec.describe BtnCell do
   let(:rendered) { cell.call }
   subject { Capybara.string(rendered) }
 
-  # it { p rendered }
-
   describe 'HTML structure' do
     context 'when empty instructions' do
       let(:instructions) { {} }
@@ -21,14 +19,14 @@ RSpec.describe BtnCell do
         let(:text) { 'TEXT' }
         let(:instructions) { { text: text } }
 
-        it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+        it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
         it { should have_selector('.btn > span', text: text) }
         it { should_not have_selector('.btn > i') }
 
         context 'and props are passed' do
           let(:instructions) { { text: text, props: { text: { class: 'test', id: 'text' } } } }
 
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+          it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
           it { should have_selector('.btn > span.test#text', text: text) }
           it { should_not have_selector('.btn > i') }
         end
@@ -44,7 +42,7 @@ RSpec.describe BtnCell do
               }
             end
 
-            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('button.btn.btn-secondary[type="button"]') }
             it { should have_selector('.btn > span', text: text) }
             it { should_not have_selector('.btn > i') }
           end
@@ -60,7 +58,7 @@ RSpec.describe BtnCell do
                 }
               end
 
-              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
               it { should have_selector('.btn > span', text: text) }
               it { should_not have_selector('.btn > i') }
             end
@@ -75,7 +73,7 @@ RSpec.describe BtnCell do
                 }
               end
 
-              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
               it { should have_selector('.btn > span', text: text) }
               it { should_not have_selector('.btn > i') }
             end
@@ -96,7 +94,7 @@ RSpec.describe BtnCell do
               }
             end
 
-            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('button.btn.btn-secondary[type="button"]') }
             it { should have_selector('.btn > span', text: text) }
             it { should_not have_selector('.btn > i') }
           end
@@ -107,14 +105,14 @@ RSpec.describe BtnCell do
         let(:text) { :TEXT }
         let(:instructions) { { text: text } }
 
-        it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+        it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
         it { should have_selector('.btn > span', text: text) }
         it { should_not have_selector('.btn > i') }
 
         context 'and props are passed' do
           let(:instructions) { { text: text, props: { text: { class: 'test', id: 'text' } } } }
 
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+          it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
           it { should have_selector('.btn > span.test#text', text: text) }
           it { should_not have_selector('.btn > i') }
         end
@@ -130,7 +128,7 @@ RSpec.describe BtnCell do
               }
             end
 
-            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('button.btn.btn-secondary[type="button"]') }
             it { should have_selector('.btn > span', text: text) }
             it { should_not have_selector('.btn > i') }
           end
@@ -146,7 +144,7 @@ RSpec.describe BtnCell do
                 }
               end
 
-              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
               it { should have_selector('.btn > span', text: text) }
               it { should_not have_selector('.btn > i') }
             end
@@ -161,7 +159,7 @@ RSpec.describe BtnCell do
                 }
               end
 
-              it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+              it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
               it { should have_selector('.btn > span', text: text) }
               it { should_not have_selector('.btn > i') }
             end
@@ -182,7 +180,7 @@ RSpec.describe BtnCell do
               }
             end
 
-            it { should have_selector('button.btn.d-flex.justify-content-between.align-items-center[type="button"]') }
+            it { should have_selector('button.btn.btn-secondary[type="button"]') }
             it { should have_selector('.btn > span', text: text) }
             it { should_not have_selector('.btn > i') }
           end
@@ -193,14 +191,14 @@ RSpec.describe BtnCell do
         let(:text) { ->() { 'TEXT' } }
         let(:instructions) { { text: text } }
 
-        it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+        it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
         it { should have_selector('.btn > span', text: text.call) }
         it { should_not have_selector('.btn > i') }
 
         context 'and props are passed' do
           let(:instructions) { { text: text, props: { text: { class: 'test', id: 'text' } } } }
 
-          it { should have_selector('a.btn.d-flex.justify-content-between.align-items-center[role="button"]') }
+          it { should have_selector('a.btn.btn-secondary[role="button"][href=""]') }
           it { should have_selector('.btn > span.test#text', text: text.call) }
           it { should_not have_selector('.btn > i') }
         end
