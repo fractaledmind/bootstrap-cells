@@ -55,7 +55,7 @@ class AlertCell < BootstrapCells::Cell
       if meta_for(:alert, :type)
         h[:alert][:class] = "alert-#{meta_for(:alert, :type)}"
       else
-        h[:alert][:class] = 'border-silver'
+        h[:alert][:class] = 'border-secondary'
       end
     end
   end
