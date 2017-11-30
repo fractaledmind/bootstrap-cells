@@ -5,8 +5,7 @@ class EntryCell < BootstrapCells::Cell
     {
       key: {
         type: %i[Stringable Callable],
-        default: nil,
-        required: false
+        required: true
       },
       value: {
         type: %i[Stringable Callable],

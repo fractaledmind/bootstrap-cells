@@ -13,41 +13,7 @@ RSpec.describe EntryCell do
     context 'when empty instructions' do
       let(:instructions) { {} }
 
-      it { should have_selector('dl.text-center.my-0') }
-      it { should have_selector('dl > dt', text: nil) }
-      it { should have_selector('dl > dd', text: '—') }
-
-      context 'and props are passed' do
-        let(:instructions) do
-          {
-            props: {
-              entry: { class: 'test', id: 'entry', data: { attribute: 'foo' } },
-              key: { class: 'test', id: 'key', data: { attribute: 'foo' } },
-              value: { class: 'test', id: 'value', data: { attribute: 'foo' } }
-            }
-          }
-        end
-
-        it { should have_selector('dl.text-center.my-0.test#entry') }
-        it { should have_selector('dl > dt.test#key', text: nil) }
-        it { should have_selector('dl > dd.test#value', text: '—') }
-      end
-
-      context 'and meta are passed' do
-        context 'where type is row' do
-          let(:instructions) do
-            {
-              meta: {
-                entry: { type: 'row' }
-              }
-            }
-          end
-
-          it { should have_selector('dl.d-flex.my-0') }
-          it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
-          it { should have_selector('dl > dd.col.mb-0', text: '—') }
-        end
-      end
+      it { expect { subject }.to raise_error('`key` is a required field') }
     end
 
     context 'when `key` only is defined' do
@@ -155,107 +121,10 @@ RSpec.describe EntryCell do
     end
 
     context 'when `value` only is defined' do
-      context 'as String' do
-        let(:value) { 'VALUE' }
-        let(:instructions) { { value: value } }
+      let(:value) { 'VALUE' }
+      let(:instructions) { { value: value } }
 
-        it { should have_selector('dl.text-center.my-0') }
-        it { should have_selector('dl > dt', text: nil) }
-        it { should have_selector('dl > dd', text: value) }
-
-        context 'and props are passed' do
-          let(:instructions) { { value: value, props: { value: { class: 'test', id: 'value' } } } }
-
-          it { should have_selector('dl.text-center.my-0') }
-          it { should have_selector('dl > dt', text: nil) }
-          it { should have_selector('dl > dd.test#value', text: value) }
-        end
-
-        context 'and meta are passed' do
-          context 'where type is row' do
-            let(:instructions) do
-              {
-                value: value,
-                meta: {
-                  entry: { type: 'row' }
-                }
-              }
-            end
-
-            it { should have_selector('dl.d-flex.my-0') }
-            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
-            it { should have_selector('dl > dd.col.mb-0', text: value) }
-          end
-        end
-      end
-
-      context 'as Stringable' do
-        let(:value) { :VALUE }
-        let(:instructions) { { value: value } }
-
-        it { should have_selector('dl.text-center.my-0') }
-        it { should have_selector('dl > dt', text: nil) }
-        it { should have_selector('dl > dd', text: value) }
-
-        context 'and props are passed' do
-          let(:instructions) { { value: value, props: { value: { class: 'test', id: 'value' } } } }
-
-          it { should have_selector('dl.text-center.my-0') }
-          it { should have_selector('dl > dt', text: nil) }
-          it { should have_selector('dl > dd.test#value', text: value) }
-        end
-
-        context 'and meta are passed' do
-          context 'where type is row' do
-            let(:instructions) do
-              {
-                value: value,
-                meta: {
-                  entry: { type: 'row' }
-                }
-              }
-            end
-
-            it { should have_selector('dl.d-flex.my-0') }
-            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
-            it { should have_selector('dl > dd.col.mb-0', text: value) }
-          end
-        end
-      end
-
-      context 'as Callable' do
-        let(:value) { ->() { 'VALUE' } }
-        let(:instructions) { { value: value } }
-
-        it { should have_selector('dl.text-center.my-0') }
-        it { should have_selector('dl > dt', text: nil) }
-        it { should have_selector('dl > dd', text: value.call) }
-
-        context 'and props are passed' do
-          let(:instructions) { { value: value, props: { value: { class: 'test', id: 'value' } } } }
-
-          it { should have_selector('dl.text-center.my-0') }
-          it { should have_selector('dl > dt', text: nil) }
-          it { should have_selector('dl > dd.test#value', text: value.call) }
-        end
-
-        context 'and meta are passed' do
-          context 'where type is row' do
-            let(:instructions) do
-              {
-                value: value,
-                meta: {
-                  entry: { type: 'row' }
-                }
-              }
-            end
-
-            it { should have_selector('dl.d-flex.my-0') }
-            it { should have_selector('dl > dt.col-4.text-center.mb-0', text: nil) }
-            it { should have_selector('dl > dd.col.mb-0', text: value.call) }
-          end
-        end
-      end
+      it { expect { subject }.to raise_error('`key` is a required field') }
     end
 
     context 'when `key` and `value` are defined' do
