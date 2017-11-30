@@ -13,155 +13,14 @@ RSpec.describe AlertCell do
     context 'when empty instructions' do
       let(:instructions) { {} }
 
-      it { should have_selector('div.alert.border-silver[role="alert"]') }
-      it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
-      it { should_not have_selector('.alert > .alert-title') }
-      it { should_not have_selector('.alert > .alert-body') }
-
-      context 'and props are passed' do
-        let(:instructions) do
-          {
-            props: {
-              alert: { class: 'test', id: 'alert' },
-              title: { class: 'test', id: 'title' },
-              body: { class: 'test', id: 'body' }
-            }
-          }
-        end
-
-        it { should have_selector('div.alert.border-silver.test#alert[role="alert"]') }
-        it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
-        it { should_not have_selector('.alert > .alert-title') }
-        it { should_not have_selector('.alert > .alert-body') }
-      end
-
-      context 'and meta are passed' do
-        context 'where dismissable is true' do
-          let(:instructions) do
-            {
-              meta: {
-                alert: { dismissable: true }
-              }
-            }
-          end
-
-          it { should have_selector('div.alert.alert-dismissable.border-silver[role="alert"]') }
-          it { should have_selector('.alert > button.close[data-dismiss="alert"]') }
-          it { should_not have_selector('.alert > .alert-title') }
-          it { should_not have_selector('.alert > .alert-body') }
-        end
-
-        context 'where type is specified' do
-          let(:type) { 'warning' }
-          let(:instructions) do
-            {
-              meta: {
-                alert: { type: type }
-              }
-            }
-          end
-
-          it { should have_selector("div.alert.alert-#{type}[role='alert']") }
-          it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
-          it { should_not have_selector('.alert > .alert-title') }
-          it { should_not have_selector('.alert > .alert-body') }
-        end
-
-        context 'where dismissable is true and type is specified' do
-          let(:type) { 'warning' }
-          let(:instructions) do
-            {
-              meta: {
-                alert: {
-                  dismissable: true,
-                  type: type
-                }
-              }
-            }
-          end
-
-          it { should have_selector("div.alert.alert-#{type}[role='alert']") }
-          it { should have_selector('.alert > button.close[data-dismiss="alert"]') }
-          it { should_not have_selector('.alert > .alert-title') }
-          it { should_not have_selector('.alert > .alert-body') }
-        end
-      end
+      it { expect { subject }.to raise_error('`body` is a required field') }
     end
 
     context 'when `title` only is defined' do
-      context 'as String' do
-        let(:title) { 'TITLE' }
-        let(:instructions) { { title: title } }
+      let(:title) { 'TITLE' }
+      let(:instructions) { { title: title } }
 
-        it { should have_selector('div.alert.border-silver[role="alert"]') }
-        it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
-        it { should have_selector('.alert > h4.alert-title', text: title) }
-        it { should_not have_selector('.alert > .alert-body') }
-
-        context 'and props are passed' do
-          let(:instructions) { { title: title, props: { title: { class: 'test', id: 'title' } } } }
-
-          it { should have_selector('div.alert.border-silver[role="alert"]') }
-          it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
-          it { should have_selector('.alert > h4.alert-title.test#title', text: title) }
-          it { should_not have_selector('.alert > .alert-body') }
-        end
-
-        context 'and meta are passed' do
-          context 'where dismissable is true' do
-            let(:instructions) do
-              {
-                title: title,
-                meta: {
-                  alert: { dismissable: true }
-                }
-              }
-            end
-
-            it { should have_selector('div.alert.alert-dismissable.border-silver[role="alert"]') }
-            it { should have_selector('.alert > button.close[data-dismiss="alert"]') }
-            it { should have_selector('.alert > h4.alert-title', text: title) }
-            it { should_not have_selector('.alert > .alert-body') }
-          end
-
-          context 'where type is specified' do
-            let(:type) { 'warning' }
-            let(:instructions) do
-              {
-                title: title,
-                meta: {
-                  alert: { type: type }
-                }
-              }
-            end
-
-            it { should have_selector("div.alert.alert-#{type}[role='alert']") }
-            it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
-            it { should have_selector('.alert > h4.alert-title', text: title) }
-            it { should_not have_selector('.alert > .alert-body') }
-          end
-
-          context 'where dismissable is true and type is specified' do
-            let(:type) { 'warning' }
-            let(:instructions) do
-              {
-                title: title,
-                meta: {
-                  alert: {
-                    dismissable: true,
-                    type: type
-                  }
-                }
-              }
-            end
-
-            it { should have_selector("div.alert.alert-#{type}[role='alert']") }
-            it { should have_selector('.alert > button.close[data-dismiss="alert"]') }
-            it { should have_selector('.alert > h4.alert-title', text: title) }
-            it { should_not have_selector('.alert > .alert-body') }
-          end
-        end
-      end
+      it { expect { subject }.to raise_error('`body` is a required field') }
     end
 
     context 'when `body` only is defined' do
@@ -169,7 +28,7 @@ RSpec.describe AlertCell do
         let(:body) { 'BODY' }
         let(:instructions) { { body: body } }
 
-        it { should have_selector('div.alert.border-silver[role="alert"]') }
+        it { should have_selector('div.alert.border-secondary[role="alert"]') }
         it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
         it { should_not have_selector('.alert > .alert-title') }
         it { should have_selector('.alert > div.alert-body', text: body) }
@@ -177,7 +36,7 @@ RSpec.describe AlertCell do
         context 'and props are passed' do
           let(:instructions) { { body: body, props: { body: { class: 'test', id: 'body' } } } }
 
-          it { should have_selector('div.alert.border-silver[role="alert"]') }
+          it { should have_selector('div.alert.border-secondary[role="alert"]') }
           it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
           it { should_not have_selector('.alert > .alert-title') }
           it { should have_selector('.alert > div.alert-body.test#body', text: body) }
@@ -194,7 +53,7 @@ RSpec.describe AlertCell do
               }
             end
 
-            it { should have_selector('div.alert.alert-dismissable.border-silver[role="alert"]') }
+            it { should have_selector('div.alert.alert-dismissable.border-secondary[role="alert"]') }
             it { should have_selector('.alert > button.close[data-dismiss="alert"]') }
             it { should_not have_selector('.alert > .alert-title') }
             it { should have_selector('.alert > div.alert-body', text: body) }
@@ -246,7 +105,7 @@ RSpec.describe AlertCell do
         let(:body) { 'BODY' }
         let(:instructions) { { title: title, body: body } }
 
-        it { should have_selector('div.alert.border-silver[role="alert"]') }
+        it { should have_selector('div.alert.border-secondary[role="alert"]') }
         it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
         it { should have_selector('.alert > h4.alert-title', text: title) }
         it { should have_selector('.alert > div.alert-body', text: body) }
@@ -262,7 +121,7 @@ RSpec.describe AlertCell do
             }
           end
 
-          it { should have_selector('div.alert.border-silver[role="alert"]') }
+          it { should have_selector('div.alert.border-secondary[role="alert"]') }
           it { should_not have_selector('.alert > button.close[data-dismiss="alert"]') }
           it { should have_selector('.alert > h4.alert-title.test#title', text: title) }
           it { should have_selector('.alert > div.alert-body.test#body', text: body) }
@@ -280,7 +139,7 @@ RSpec.describe AlertCell do
               }
             end
 
-            it { should have_selector('div.alert.alert-dismissable.border-silver[role="alert"]') }
+            it { should have_selector('div.alert.alert-dismissable.border-secondary[role="alert"]') }
             it { should have_selector('.alert > button.close[data-dismiss="alert"]') }
             it { should have_selector('.alert > h4.alert-title', text: title) }
             it { should have_selector('.alert > div.alert-body', text: body) }

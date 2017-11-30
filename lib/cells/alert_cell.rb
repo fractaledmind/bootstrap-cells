@@ -11,7 +11,7 @@ class AlertCell < BootstrapCells::Cell
       body: {
         type: %i[Stringable Callable],
         default: nil,
-        required: false
+        required: true
       }
     }
   end
